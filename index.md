@@ -50,7 +50,10 @@ I will store commands and links here so i might need it later.
 ### Kubernetes Configuration File
   - Create a basic deployment file with `touch nginx-deployment.yaml`
   - Add following to the file using your favourite text editor
-  ```
+
+
+
+  ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -74,7 +77,7 @@ spec:
         - containerPort: 80
   ```
 
-    ```
+    ```bash
     kubectl apply -f k8s/nginx-deployment.yaml
     ```
 
