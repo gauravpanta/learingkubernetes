@@ -1,12 +1,23 @@
-## Welcome to GitHub Pages
+## Welcome to Learning Kubernetes
 
-You can use the [editor on GitHub](https://github.com/gauravpanta/learningkubernetes/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This is a stupid blog I created with stupid markdown file with stupid github pages to track down my stupid journey of learning kubernetes as a software engineer.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I will store commands and links here so i might need it later.
 
-### Markdown
+### Day 1
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Install [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- Command to create a simple deployment
+  ```
+  kubectl create deployment gp-awesome-nginx --image=nginx
+  ```
+- Command to view replicaset
+  ```
+  kubectl get replicaset
+  ```
+
+- Basically, Deployment manages a replicaset. Replicaset manages a Pod. Pod is an abstraction of a container.
+- 
 
 ```markdown
 Syntax highlighted code block
