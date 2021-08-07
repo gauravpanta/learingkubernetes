@@ -4,7 +4,7 @@ This is a stupid blog I created with stupid markdown file with stupid github pag
 
 I will store commands and links here so i might need it later.
 
-### Day 1
+## Day 1
 
 - Install [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - Command to create a simple deployment
@@ -17,32 +17,66 @@ I will store commands and links here so i might need it later.
   ```
 
 - Basically, Deployment manages a replicaset. Replicaset manages a Pod. Pod is an abstraction of a container.
-- 
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+- Command to edit deployment
+  ```
+  kubectl edit deployment gp-awesome-nginx
+  ```
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+- Command to get pods
+  ```
+  kubectl get pod
+  ```
 
-**Bold** and _Italic_ and `Code` text
+### Debugging Pods
 
-[Link](url) and ![Image](src)
-```
+- Command to get logs
+  ```
+  kubectl logs -f --tail 1000 {pod-name}
+  ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+- Go inside the pod
+  ```
+  kubectl exec -it {pod-name} -- bash
+  ```
 
-### Jekyll Themes
+### Delete Pods
+    ```
+    kubectl delete deployment gp-awesome-nginx
+    ```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gauravpanta/learningkubernetes/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Kubernetes Configuration File
+  - Create a basic deployment file with `touch nginx-deployment.yaml`
+  - Add following to the file using your favourite text editor
+  ```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.16
+        ports:
+        - containerPort: 80
+  ```
 
-### Support or Contact
+    ```
+    kubectl apply -f k8s/nginx-deployment.yaml
+    ```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+
+That's all for Day 1
