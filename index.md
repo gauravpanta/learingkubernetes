@@ -130,7 +130,7 @@ kubectl apply -f k8s/nginx-service.yaml
 ### Create Mongo DB deployment
 Request Comes from browser -> Mongo Express External Service -> Mongo Express Pod -> Mongo DB Internal Service -> MongoDB Pod
 
-- Create secret config
+- Create [secret config](https://github.com/gauravpanta/learningkubernetes/blob/gh-pages/k8s/mongo-secret.yaml)
   ```yaml
   apiVersion: v1
   kind: Secret
@@ -141,7 +141,7 @@ Request Comes from browser -> Mongo Express External Service -> Mongo Express Po
     mongo-root-username: base64-value
     mongo-root-password: base64-value
   ```
-- Create the mongodb-deployment yaml and add env's as follows
+- Create the [mongodb-deployment yaml](https://github.com/gauravpanta/learningkubernetes/blob/gh-pages/k8s/mongo-deployment.yaml) and add env's as follows
   ```yaml
   ...
           env:
@@ -189,8 +189,8 @@ spec:
   ```
 
 ### Mongo Express External Service
-- Check out k8s/mongo-express-deployment.yaml
-- Check out k8s/mongo-configmap.yaml
+- Check out [k8s/mongo-express-deployment.yaml](https://github.com/gauravpanta/learningkubernetes/blob/gh-pages/k8s/mongo-express-deployment.yaml)
+- Check out [k8s/mongo-configmap.yaml](https://github.com/gauravpanta/learningkubernetes/blob/gh-pages/k8s/mongo-configmap.yaml)
 - Config map basically can be used to map services to a variable which can be used in Deployments
 - Apply configmap yaml first and then the deployment
 - Create External Service to allow connections from outside
