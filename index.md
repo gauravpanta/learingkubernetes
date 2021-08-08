@@ -77,9 +77,131 @@ spec:
         - containerPort: 80
   ```
 
-    ```bash
+    ```
     kubectl apply -f k8s/nginx-deployment.yaml
     ```
 
 
 That's all for Day 1
+
+
+## Day 2
+
+### Kubernetes Service file 
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+```
+
+```
+kubectl apply -f k8s/nginx-service.yaml
+```
+
+- Get Service info 
+  ```
+  kubectl describe service nginx-service
+  ```
+- Get more pod info
+  ```
+  kubectl get pod -o wide
+  ```
+
+- Get full deployment yaml
+  ```
+  kubectl get deployment nginx-deployment -o yaml > ndres.yaml
+  ```
+
+- Delete with config file
+  ```
+  kubectl delete -f k8s/nginx-deployment.yaml
+  ```
+
+
+
+### Create Mongo DB deployment
+Request Comes from browser -> Mongo Express External Service -> Mongo Express Pod -> Mongo DB Internal Service -> MongoDB Pod
+
+- Create secret config
+  ```yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: mongodb-secret
+  type: Opaque
+  data:
+    mongo-root-username: base64-value
+    mongo-root-password: base64-value
+  ```
+- Create the mongodb-deployment yaml and add env's as follows
+  ```yaml
+  ...
+          env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: mongo-root-username
+              name: mongodb-secret
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mongo-root-password
+              name: mongodb-secret
+  ```
+- Simple way to encode values to base64
+  ```
+  echo -n 'gp-admin' | base64
+  ```
+- Applying secret is same as applying deployment
+- Command to get secret
+  ```
+  kubectl get secret
+  ```
+- Apply the deployment!
+  
+
+### Next we create Internal Service
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+```
+
+- Getting all items in k8s
+  ```
+  kubectl get all | grep mongodb
+  ```
+
+### Mongo Express External Service
+- Check out k8s/mongo-express-deployment.yaml
+- Check out k8s/mongo-configmap.yaml
+- Config map basically can be used to map services to a variable which can be used in Deployments
+- Apply configmap yaml first and then the deployment
+- Create External Service to allow connections from outside
+    - External Service has type: Loadbalancer
+    - It accepts nodePort config param which must be between 30000-32767
+- Apply the external service 
+- Assign external ip address by using
+  ```
+  minikube service mongodb-express-service
+  ```
+
+Bam! We just made our service (mongo-express) accessible publically without allowing direct access to our mongodb instance.
+
+Super! Day 2 Complete!
