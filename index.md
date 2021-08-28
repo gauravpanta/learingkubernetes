@@ -205,3 +205,64 @@ spec:
 Bam! We just made our service (mongo-express) accessible publically without allowing direct access to our mongodb instance.
 
 Super! Day 2 Complete!
+
+## Day 3
+
+
+### Namespaces in kubernetes
+```bash
+kubectl get namespaces
+```
+
+Output:
+```
+NAME                   STATUS   AGE
+default                Active   44d
+kube-node-lease        Active   44d
+kube-public            Active   44d
+kube-system            Active   44d
+kubernetes-dashboard   Active   44d
+```
+
+
+```bash
+kubectl cluster-info
+```
+
+### Creating new namespaces
+```bash
+kubectl create namespace gpdon
+```
+
+Why to use namespaces?
+- To separate applications !
+- To get an easier overview.
+- Logically grouping resources.
+- Separate teams can work on their own namespaces
+- Blue/Green Deployments (A/B) in same kubernetes cluster with resource sharing (share elk or nginx or sth like that)
+  
+FAQ:
+- Each namespace has its own configmaps
+- We can access other services from multiple namespaces
+- Some components cant be created in a namespace. eg: Persistent Volumes. To access these:
+``` bash
+kubectl api-resources --namespaced=false
+```
+
+### How to create components in a Namespace
+
+*Add namespace attribute to metadata section* 
+
+Create a namespace config file:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <insert-namespace-name-here>
+```
+
+In mine i have saved it as k8s/gpdon-namespace.yaml. Then apply the config.
+
+That's all for Day 3.
+
