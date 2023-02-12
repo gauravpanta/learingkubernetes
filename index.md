@@ -1,6 +1,6 @@
 ## Welcome to Learning Kubernetes
 
-This is a stupid blog I created with stupid markdown file with stupid github pages to track down my stupid journey of learning kubernetes as a software engineer.
+This is a blog I created with markdown file with github pages to track down my journey of learning kubernetes as a software engineer.
 
 I will store commands and links here so i might need it later.
 
